@@ -12,6 +12,7 @@ import "./fluentui-html"
 import "./fluentui-json"
 import "./fluentui-ios"
 import "./fluentui-reactnative"
+import "./fluentui-scss"
 import "./fluentui-winui"
 
 export const buildOutputs = (input: string[] | string, outputPath: string, platforms: SupportedPlatform[] | undefined): void =>
@@ -97,6 +98,20 @@ export const buildOutputs = (input: string[] | string, outputPath: string, platf
 					transformGroup: "fluentui/cssflat",
 					buildPath: `${outputPath}/web/`,
 					files: [{ destination: "tokens-flat.css", format: "css/variables" }],
+				}
+			}
+		)
+	}
+
+	if (!platforms || platforms.includes("scss"))
+	{
+		buildOnePlatform(tokens, "scss",
+			{
+				scss:
+				{
+					transformGroup: "fluentui/scss",
+					buildPath: `${outputPath}/web/`,
+					files: [{ destination: "tokens.scss", format: "scss/variables" }],
 				}
 			}
 		)
