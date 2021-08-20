@@ -112,6 +112,12 @@ export const buildOutputs = (input: string[] | string, outputPath: string, platf
 					transformGroup: "fluentui/scss",
 					buildPath: `${outputPath}/web/`,
 					files: [{ destination: "tokens.scss", format: "scss/variables" }],
+				},
+				scssflat:
+				{
+					transformGroup: "fluentui/scssflat",
+					buildPath: `${outputPath}/web/`,
+					files: [{ destination: "tokens-flat.scss", format: "scss/variables" }],
 				}
 			}
 		)

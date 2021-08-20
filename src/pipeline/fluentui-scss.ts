@@ -6,6 +6,15 @@ import * as Utils from "./utils"
 import { degrees } from "./transform-math"
 
 const nameForCss = path => path.join("-").toLowerCase()
+const nameForLoadThemeScss = path => toCamelCase(path.join(""));
+
+const toCamelCase = (str) => 
+{
+  return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function(match, index) {
+    if (+match === 0) return ""; // or if (/\s+/.test(match)) for white spaces
+    return index === 0 ? match.toLowerCase() : match.toUpperCase();
+  });
+}
 
 StyleDictionary.registerTransform({
 	name: "fluentui/name/kebab",
@@ -17,7 +26,8 @@ StyleDictionary.registerTransform({
 	name: "fluentui/alias/scss",
 	type: "value",
 	matcher: prop => "resolvedAliasPath" in prop,
-	transformer: prop => `var(--${nameForCss(prop.resolvedAliasPath)})`,
+	transformer: prop => `'[theme: ${nameForLoadThemeScss(prop.resolvedAliasPath)}, default: ${prop.value}]'`,
+	// transformer: prop => `var(--${nameForCss(prop.resolvedAliasPath)})`,
 })
 
 StyleDictionary.registerTransform({
@@ -140,4 +150,9 @@ StyleDictionary.registerTransform({
 StyleDictionary.registerTransformGroup({
 	name: "fluentui/scss",
 	transforms: ["fluentui/attribute", "fluentui/name/kebab", "fluentui/alias/scss", "time/seconds", "fluentui/size/scss", "fluentui/color/scss", "fluentui/strokealignment/scss"],
+})
+
+StyleDictionary.registerTransformGroup({
+	name: "fluentui/scssflat",
+	transforms: ["fluentui/attribute", "fluentui/name/kebab", "fluentui/alias/flatten", "time/seconds", "fluentui/size/scss", "fluentui/color/scss", "fluentui/strokealignment/scss"],
 })
